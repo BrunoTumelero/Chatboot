@@ -1,17 +1,25 @@
 import json
+from keyword import issoftkeyword
 
 class Camarada():
     def __init__(self):
         try:
-            with open("memoria.json", 'r') as mj:
-                self.memory = json.load(mj)
+            banco_de_dados = open("memoria.json", 'r')
         except:    
-            with open('memoria.json', 'w', encoding="utf8") as mj:
-                dici = {"Olá": "Adeus",
-                "Adeus": "Nunca mais volte!"}
-                json.dump(dici, mj, indent=2, ensure_ascii=False)
-            with open("memoria.json", 'r') as mj:
-                self.memory = json.load(mj)
+            banco_de_dados = open('memoria.json', 'w')
+            banco_de_dados.write('''{"Olá": "Adeus",
+            "Adeus": "Nunca mais volte!"}''')
+            #banco_de_dados.close()
+            banco_de_dados = open("memoria.json", 'r')
+        self.memoria = json.load(banco_de_dados)
 
+    def pega_frases(self, frase=None):
+        return frase
 
-Camarada()
+    def processa_dados(self, dados):
+        if dados in self.memoria:
+            return self.memoria[dados]
+        else:
+            return 'Não entendi'
+
+#Camarada()
